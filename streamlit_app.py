@@ -1,26 +1,38 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import json
 
-# Load data
-data = pd.read_csv("csv/votes_cleansed.csv")
+st.set_page_config(layout="wide")
+# st.write("""
+# This is the introduction of the Project!
+# """)
 
-# Aggregate votes per region and candidate
-vote_counts = data.groupby(["province", "candidate_name", "party_name"])["vote_values"].sum().reset_index()
+df = pd.read_csv('csv/votes_cleansed.csv')
 
-# Get the winner in each province
-winners = vote_counts.loc[vote_counts.groupby("province")["vote_values"].idxmax()]
+votes = df.groupby(["province", "candidate_name"]).agg({
+    "vote_values": "sum"
+})
 
-# Sidebar Filters
-province_filter = st.sidebar.multiselect("Select Provinces", winners["province"].unique())
-if province_filter:
-    winners = winners[winners["province"].isin(province_filter)]
+winners = votes.groupby(["province"])["vote_values"].idxmax()
+winning_df = votes.loc[winners].reset_index()
 
-# Display results
-st.title("Voting Results by Region")
-st.dataframe(winners)
+with open("sources/id.json", "r", encoding="utf-8") as f:
+    geojson_data = json.load(f)
 
-# Bar Chart
-fig = px.bar(winners, x="province", y="vote_values", color="candidate_name", 
-             title="Winning Candidate in Each Province", labels={"vote_values": "Votes"})
-st.plotly_chart(fig)
+fig = px.choropleth(
+    winning_df,
+    geojson=geojson_data,
+    featureidkey="properties.name",
+    locations="province",
+    color="candidate_name",
+    hover_name="province",
+    hover_data=["vote_values"],
+    title='Colored Map Graph 🌏'
+)
+
+fig.update_layout(width=950, height=550)
+fig.update_geos(fitbounds="geojson", visible=False)
+st.plotly_chart(fig, use_container_width=True)
+
+# st.dataframe(winning_df)  
