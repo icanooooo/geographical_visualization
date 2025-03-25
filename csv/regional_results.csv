@@ -1,35 +1,35 @@
 ,province,candidate_name,vote_count
-0,Aceh,Dominic Lefevre,582
-1,Bali,Dominic Lefevre,16
-2,Banten,Dominic Lefevre,14
-3,Bengkulu,Nelli Aubert,19
-4,DI Yogyakarta,Emily Meyer,16
-5,DKI Jakarta,Dominic Lefevre,16
-6,Gorontalo,George Dubois,27
-7,Jambi,Dominic Lefevre,13
-8,Jawa Barat,Emily Meyer,17
-9,Jawa Tengah,Emily Meyer,13
-10,Jawa Timur,George Dubois,15
-11,Kalimantan Barat,Nelli Aubert,14
-12,Kalimantan Selatan,George Dubois,19
-13,Kalimantan Tengah,Emily Meyer,15
-14,Kalimantan Timur,George Dubois,14
-15,Kalimantan Utara,Dominic Lefevre,17
-16,Kep. Bangka Belitung,Nelli Aubert,19
-17,Kep. Riau,Emily Meyer,11
-18,Lampung,Emily Meyer,24
-19,Maluku,George Dubois,16
-20,Maluku Utara,Emily Meyer,19
-21,Nusa Tenggara Barat,George Dubois,19
-22,Nusa Tenggara Timur,Emily Meyer,18
-23,Papua,Nelli Aubert,14
-24,Papua Barat,George Dubois,18
-25,Riau,Emily Meyer,568
-26,Sulawesi Barat,Nelli Aubert,21
-27,Sulawesi Selatan,George Dubois,17
-28,Sulawesi Tengah,George Dubois,19
-29,Sulawesi Tenggara,Nelli Aubert,21
-30,Sulawesi Utara,George Dubois,15
-31,Sumatera Barat,George Dubois,605
-32,Sumatera Selatan,Nelli Aubert,19
-33,Sumatera Utara,Nelli Aubert,591
+0,Aceh,George Dubois,89
+1,Bali,Nelli Aubert,110
+2,Banten,Dominic Lefevre,103
+3,Bengkulu,George Dubois,101
+4,DI Yogyakarta,Emily Meyer,97
+5,DKI Jakarta,Emily Meyer,99
+6,Gorontalo,Emily Meyer,111
+7,Jambi,Dominic Lefevre,102
+8,Jawa Barat,Nelli Aubert,95
+9,Jawa Tengah,Nelli Aubert,97
+10,Jawa Timur,Emily Meyer,94
+11,Kalimantan Barat,Emily Meyer,93
+12,Kalimantan Selatan,George Dubois,108
+13,Kalimantan Tengah,Dominic Lefevre,102
+14,Kalimantan Timur,Dominic Lefevre,104
+15,Kalimantan Utara,Nelli Aubert,113
+16,Kep. Bangka Belitung,Emily Meyer,98
+17,Kep. Riau,George Dubois,91
+18,Lampung,Nelli Aubert,98
+19,Maluku,Emily Meyer,98
+20,Maluku Utara,George Dubois,93
+21,Nusa Tenggara Barat,George Dubois,91
+22,Nusa Tenggara Timur,Emily Meyer,99
+23,Papua,Nelli Aubert,92
+24,Papua Barat,Nelli Aubert,96
+25,Riau,George Dubois,94
+26,Sulawesi Barat,Nelli Aubert,93
+27,Sulawesi Selatan,Emily Meyer,105
+28,Sulawesi Tengah,Nelli Aubert,99
+29,Sulawesi Tenggara,George Dubois,107
+30,Sulawesi Utara,Nelli Aubert,92
+31,Sumatera Barat,Dominic Lefevre,97
+32,Sumatera Selatan,George Dubois,101
+33,Sumatera Utara,George Dubois,92
