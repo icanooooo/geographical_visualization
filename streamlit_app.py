@@ -17,24 +17,36 @@ def make_choropleth(input_df, input_id, input_column):
         locations=input_id,
         color=input_column,
         hover_name=input_id,
-        hover_data=["vote_values"],
-        title='Colored Map Graph 🌏'
+        hover_data=["vote_values"]
     )
 
-    fig.update_layout(width=950, height=550)
+    fig.update_layout(width=950,
+                      height=450,
+                      margin=dict(l=0, r=0,t=0, b=0),
+                      paper_bgcolor='rgba(0,0,0,0)',
+                      plot_bgcolor='rgba(0,0,0,0)',
+                    #   title=dict(
+                    #       text='Colored Map Graph 🌏',
+                    #       x=0.02,
+                    #       y=0.93,
+                    #       font=dict(size=20)
+                    #   )
+                      )
     fig.update_geos(fitbounds="geojson", visible=False)
 
     return fig
 
-def create_proporional_bar_chart(dataframe, region, column):
+def create_proporional_bar_chart(dataframe, region, candidate, column, title):
     if region != "All":
         dataframe = dataframe[dataframe['province'] == region]
+    if candidate != "All":
+        dataframe = dataframe[dataframe['candidate_name'] == candidate]
 
     popularity_counts = dataframe.groupby(column)['vote_values'].sum().reset_index()
     popularity_counts = popularity_counts.sort_values(by="vote_values", ascending=False)
 
     total_votes = popularity_counts['vote_values'].sum()
-    popularity_counts["percentage"] = (popularity_counts["vote_values"] / total_votes) * 100
+    popularity_counts["percentage"] = (popularity_counts["vote_values"] / total_votes)
 
     fig = go.Figure()
 
@@ -52,10 +64,11 @@ def create_proporional_bar_chart(dataframe, region, column):
         left += row['percentage']
 
     fig.update_layout(
-        title="Vote Distribution by Popularity Vote",
+        title=title,
         barmode="stack",
         showlegend=False,
-        height=400
+        height=200,
+        margin=dict(l=5, r=5,t=30, b=5)
     )
 
     return fig
@@ -71,13 +84,20 @@ votes = df.groupby(["province", "candidate_name"]).agg({
 winners = votes.groupby(["province"])["vote_values"].idxmax()
 winning_df = votes.loc[winners].reset_index()
 
+# st.title("Political Dashboard Visualization Simulation 🌏")
+
 col = st.columns((7, 3), gap='medium')
 
 with st.sidebar:
-    regions = ["All", "DKI Jakarta"]
+    regions = ["All"] + sorted(df["province"].unique().tolist())
     selected_region = st.selectbox("Select Region", regions )
 
+    candidates = ["All"] + sorted(df["candidate_name"].unique().tolist())
+    selected_candidate = st.selectbox("Select Candidate", candidates)
+
 with col[0]:
+    st.markdown("## Geographical Voting Visualization 🌏")
+
     a = make_choropleth(winning_df, "province", "candidate_name")
 
     st.plotly_chart(a, use_container_width=True)
@@ -85,15 +105,28 @@ with col[0]:
     col_col = st.columns((5,5), gap='small')
 
     with col_col[0]:
-        popularity_fig = create_proporional_bar_chart(df, selected_region, 'candidate_name')
+        popularity_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'candidate_name', "Vote Distribution by Popularity Vote 📈")
 
         st.plotly_chart(popularity_fig)
     with col_col[1]:
-        gender_fig = create_proporional_bar_chart(df, selected_region, 'gender')
+        gender_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'gender', "Vote Distribution by Gender ♂️♀️")
 
         st.plotly_chart(gender_fig)
 
 with col[1]:
-    st.dataframe(df)
+    st.markdown("""
+        <style>
+            .spacer {
+                padding-top: 30px;  /* Adjust as needed */
+            }
+        </style>
+        <div class="spacer"></div>
+    """, unsafe_allow_html=True)
+    
+    with st.expander("About", expanded=True):
+        st.write('''
+            ### Political Dashboard Simulation 📊:
+            This project is using a generated random data using Random APIs. This dashboard by no means represent actual reality, all data shown is for simulation purposes to showcase dashboard development.
+            ''')
 
 # st.dataframe(winning_df)  
