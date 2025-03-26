@@ -1,35 +1,35 @@
 ,province,candidate_name,vote_count
-0,Aceh,George Dubois,89
-1,Bali,Nelli Aubert,110
-2,Banten,Dominic Lefevre,103
-3,Bengkulu,George Dubois,101
-4,DI Yogyakarta,Emily Meyer,97
-5,DKI Jakarta,Emily Meyer,99
-6,Gorontalo,Emily Meyer,111
-7,Jambi,Dominic Lefevre,102
-8,Jawa Barat,Nelli Aubert,95
-9,Jawa Tengah,Nelli Aubert,97
-10,Jawa Timur,Emily Meyer,94
-11,Kalimantan Barat,Emily Meyer,93
-12,Kalimantan Selatan,George Dubois,108
-13,Kalimantan Tengah,Dominic Lefevre,102
-14,Kalimantan Timur,Dominic Lefevre,104
-15,Kalimantan Utara,Nelli Aubert,113
-16,Kep. Bangka Belitung,Emily Meyer,98
-17,Kep. Riau,George Dubois,91
-18,Lampung,Nelli Aubert,98
-19,Maluku,Emily Meyer,98
-20,Maluku Utara,George Dubois,93
-21,Nusa Tenggara Barat,George Dubois,91
-22,Nusa Tenggara Timur,Emily Meyer,99
-23,Papua,Nelli Aubert,92
-24,Papua Barat,Nelli Aubert,96
-25,Riau,George Dubois,94
-26,Sulawesi Barat,Nelli Aubert,93
-27,Sulawesi Selatan,Emily Meyer,105
-28,Sulawesi Tengah,Nelli Aubert,99
-29,Sulawesi Tenggara,George Dubois,107
-30,Sulawesi Utara,Nelli Aubert,92
-31,Sumatera Barat,Dominic Lefevre,97
-32,Sumatera Selatan,George Dubois,101
-33,Sumatera Utara,George Dubois,92
+0,Aceh,Alan Rodriguez,98
+1,Bali,Alan Rodriguez,98
+2,Banten,Pedro Guerin,107
+3,Bengkulu,Alan Rodriguez,109
+4,DI Yogyakarta,Alan Rodriguez,111
+5,DKI Jakarta,Pedro Guerin,99
+6,Gorontalo,Josip Brun,108
+7,Jambi,Johanna Moulin,108
+8,Jawa Barat,Josip Brun,107
+9,Jawa Tengah,Pedro Guerin,114
+10,Jawa Timur,Alan Rodriguez,106
+11,Kalimantan Barat,Alan Rodriguez,121
+12,Kalimantan Selatan,Pedro Guerin,112
+13,Kalimantan Tengah,Josip Brun,110
+14,Kalimantan Timur,Josip Brun,113
+15,Kalimantan Utara,Pedro Guerin,114
+16,Kep. Bangka Belitung,Johanna Moulin,103
+17,Kep. Riau,Pedro Guerin,112
+18,Lampung,Johanna Moulin,104
+19,Maluku,Johanna Moulin,103
+20,Maluku Utara,Alan Rodriguez,114
+21,Nusa Tenggara Barat,Johanna Moulin,118
+22,Nusa Tenggara Timur,Johanna Moulin,111
+23,Papua,Pedro Guerin,104
+24,Papua Barat,Pedro Guerin,123
+25,Riau,Johanna Moulin,121
+26,Sulawesi Barat,Johanna Moulin,111
+27,Sulawesi Selatan,Pedro Guerin,124
+28,Sulawesi Tengah,Johanna Moulin,109
+29,Sulawesi Tenggara,Pedro Guerin,112
+30,Sulawesi Utara,Johanna Moulin,109
+31,Sumatera Barat,Josip Brun,107
+32,Sumatera Selatan,Johanna Moulin,110
+33,Sumatera Utara,Alan Rodriguez,101

@@ -4,7 +4,7 @@ A dashboard web app build with Python and Streamlit. Showcasing Visual Data usin
 
 ## Demo App
 
-Coming soon.
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://indonesia-voting-sim-dashboard.streamlit.app/)
 
 ## Data Source
 

@@ -195,9 +195,9 @@ def main():
 
             st.plotly_chart(popularity_fig)
         with col_col[1]:
-            gender_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'gender', "Vote Distribution by Gender ♂️♀️")
+            sex_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'sex', "Vote Distribution by Sex ♂️♀️")
 
-            st.plotly_chart(gender_fig)
+            st.plotly_chart(sex_fig)
 
     with col[1]:
         st.markdown("""
