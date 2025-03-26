@@ -117,7 +117,7 @@ def get_winner(dataframe, region):
         winners_text = '**Electoral Votes**'
 
         column = 'province'
-        column_name = "Total Profince Won"
+        column_name = "Total Province Won"
     else:
         winners_text = f"**Total Votes in {region}**"
 
@@ -128,7 +128,7 @@ def get_winner(dataframe, region):
         winners_summary_df = winners_summary_df.sort_values('vote_values', ascending=False)
         
         column = 'vote_values'
-        column_name = "Total Votes in Profince"
+        column_name = "Total Votes in Province"
 
     return winners_text, winners_summary_df, column, column_name
 
