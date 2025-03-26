@@ -73,6 +73,30 @@ def create_proporional_bar_chart(dataframe, region, candidate, column, title):
 
     return fig
 
+def show_winners(dataframe, winning_df, region, candidate):
+    if region == 'All':
+        dataframe = winning_df.groupby('candidate_name').agg({
+            'province':'count'
+        })
+        label = 'Winner By Electoral'
+        dataframe.reset_index()
+        row = dataframe.loc[dataframe['province'].idxmax()]
+        values = row.name
+        delta = row.to_string(index=False) + " Provinces"
+
+    else:
+        dataframe = dataframe[dataframe['province'] == region]
+        dataframe = dataframe.groupby('candidate_name').agg({
+            'vote_values':'count'
+        })
+        label = 'By Popular Vote on Province'
+        row = dataframe.loc[dataframe['vote_values'].idxmax()]
+        values = row.name
+        delta = row.to_string(index=False) + " Votes"
+
+    return label, values, delta
+
+
 st.set_page_config(layout="wide")
 
 df = pd.read_csv('csv/votes_cleansed.csv')
@@ -121,6 +145,13 @@ with col[1]:
             }
         </style>
         <div class="spacer"></div>
+        <style>
+        div[data-testid="stMetric"] {
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        </style>
     """, unsafe_allow_html=True)
     
     with st.expander("About", expanded=True):
@@ -128,5 +159,7 @@ with col[1]:
             ### Political Dashboard Simulation 📊:
             This project is using a generated random data using Random APIs. This dashboard by no means represent actual reality, all data shown is for simulation purposes to showcase dashboard development.
             ''')
-
+        
+    label, value, delta = show_winners(df, winning_df, selected_region, selected_candidate)
+    st.metric(label=label, value=value, delta=delta)
 # st.dataframe(winning_df)  
