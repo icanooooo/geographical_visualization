@@ -1,6 +1,6 @@
 # 🌏 Geographical Demography Voting Simulation Dashboard
 
-A dashboard web app build with Python and Streamlit. Showcasing Visual Data using simulated Indonesia voting data with geographical.
+A dashboard web app build with Python and Streamlit. Showcasing Visual Data using simulated Indonesia voting data with geographical information.
 
 ## Demo App
 
