@@ -97,7 +97,7 @@ def show_winners(dataframe, winning_df, region, candidate):
         dataframe = dataframe.groupby('candidate_name').agg({
             'vote_values':'count'
         })
-        label = 'By Popular Vote on Province'
+        label = f'By Popular Vote on {region}'
         row = dataframe.loc[dataframe['vote_values'].idxmax()]
         values = row.name
         delta = row.to_string(index=False) + " Votes"
@@ -176,7 +176,7 @@ def main():
         st.write("**Filters:**")
 
         regions = ["All"] + sorted(df["province"].unique().tolist())
-        selected_region = st.selectbox("Select Region", regions )
+        selected_region = st.selectbox("Select Province", regions )
 
         candidates = ["All"] + sorted(df["candidate_name"].unique().tolist())
         selected_candidate = st.selectbox("Select Candidate", candidates)
