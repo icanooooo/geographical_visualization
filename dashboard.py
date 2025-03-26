@@ -86,7 +86,7 @@ def show_winners(dataframe, winning_df, region, candidate):
         dataframe = winning_df.groupby('candidate_name').agg({
             'province':'count'
         })
-        label = 'Winner By Electoral'
+        label = 'Winner by Electoral'
         dataframe.reset_index()
         row = dataframe.loc[dataframe['province'].idxmax()]
         values = row.name
@@ -97,7 +97,7 @@ def show_winners(dataframe, winning_df, region, candidate):
         dataframe = dataframe.groupby('candidate_name').agg({
             'vote_values':'count'
         })
-        label = f'By Popular Vote on {region}'
+        label = f'Winner by Popular Vote on {region}'
         row = dataframe.loc[dataframe['vote_values'].idxmax()]
         values = row.name
         delta = row.to_string(index=False) + " Votes"
