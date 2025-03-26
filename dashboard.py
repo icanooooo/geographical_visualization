@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
-import numpy as np
 import json
 
 def make_choropleth(input_df, input_id, input_column):
@@ -96,70 +94,81 @@ def show_winners(dataframe, winning_df, region, candidate):
 
     return label, values, delta
 
+def main():
+    st.set_page_config(
+        layout="wide",
+        page_title= "Indonesia Political Dashboard Simulation",
+        page_icon="🌏",
+        initial_sidebar_state="expanded"
+        )
 
-st.set_page_config(layout="wide")
+    df = pd.read_csv('csv/votes_cleansed.csv')
 
-df = pd.read_csv('csv/votes_cleansed.csv')
+    votes = df.groupby(["province", "candidate_name"]).agg({
+        "vote_values": "sum"
+    })
 
-votes = df.groupby(["province", "candidate_name"]).agg({
-    "vote_values": "sum"
-})
+    winners = votes.groupby(["province"])["vote_values"].idxmax()
+    winning_df = votes.loc[winners].reset_index()
 
-winners = votes.groupby(["province"])["vote_values"].idxmax()
-winning_df = votes.loc[winners].reset_index()
+    # st.title("Political Dashboard Visualization Simulation 🌏")
 
-# st.title("Political Dashboard Visualization Simulation 🌏")
+    col = st.columns((7, 3), gap='medium')
 
-col = st.columns((7, 3), gap='medium')
+    with st.sidebar:
+        st.title("Indonesia Political Dashboard Simulation")
+        st.write("**Filters:**")
 
-with st.sidebar:
-    regions = ["All"] + sorted(df["province"].unique().tolist())
-    selected_region = st.selectbox("Select Region", regions )
+        regions = ["All"] + sorted(df["province"].unique().tolist())
+        selected_region = st.selectbox("Select Region", regions )
 
-    candidates = ["All"] + sorted(df["candidate_name"].unique().tolist())
-    selected_candidate = st.selectbox("Select Candidate", candidates)
+        candidates = ["All"] + sorted(df["candidate_name"].unique().tolist())
+        selected_candidate = st.selectbox("Select Candidate", candidates)
 
-with col[0]:
-    st.markdown("## Geographical Voting Visualization 🌏")
+    with col[0]:
+        st.markdown("## Geographical Voting Visualization 🌏")
 
-    a = make_choropleth(winning_df, "province", "candidate_name")
+        a = make_choropleth(winning_df, "province", "candidate_name")
 
-    st.plotly_chart(a, use_container_width=True)
+        st.plotly_chart(a, use_container_width=True)
 
-    col_col = st.columns((5,5), gap='small')
+        col_col = st.columns((5,5), gap='small')
 
-    with col_col[0]:
-        popularity_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'candidate_name', "Vote Distribution by Popularity Vote 📈")
+        with col_col[0]:
+            popularity_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'candidate_name', "Vote Distribution by Popularity Vote 📈")
 
-        st.plotly_chart(popularity_fig)
-    with col_col[1]:
-        gender_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'gender', "Vote Distribution by Gender ♂️♀️")
+            st.plotly_chart(popularity_fig)
+        with col_col[1]:
+            gender_fig = create_proporional_bar_chart(df, selected_region, selected_candidate, 'gender', "Vote Distribution by Gender ♂️♀️")
 
-        st.plotly_chart(gender_fig)
+            st.plotly_chart(gender_fig)
 
-with col[1]:
-    st.markdown("""
-        <style>
-            .spacer {
-                padding-top: 30px;  /* Adjust as needed */
+    with col[1]:
+        st.markdown("""
+            <style>
+                .spacer {
+                    padding-top: 30px;  /* Adjust as needed */
+                }
+            </style>
+            <div class="spacer"></div>
+            <style>
+            div[data-testid="stMetric"] {
+                background-color: #f7f7f7;
+                border-radius: 10px;
+                padding: 10px;
             }
-        </style>
-        <div class="spacer"></div>
-        <style>
-        div[data-testid="stMetric"] {
-            background-color: #f7f7f7;
-            border-radius: 10px;
-            padding: 10px;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-    
-    with st.expander("About", expanded=True):
-        st.write('''
-            ### Political Dashboard Simulation 📊:
-            This project is using a generated random data using Random APIs. This dashboard by no means represent actual reality, all data shown is for simulation purposes to showcase dashboard development.
-            ''')
+            </style>
+        """, unsafe_allow_html=True)
         
-    label, value, delta = show_winners(df, winning_df, selected_region, selected_candidate)
-    st.metric(label=label, value=value, delta=delta)
-# st.dataframe(winning_df)  
+        with st.expander("About", expanded=True):
+            st.write('''
+                ### Political Dashboard Simulation 📊:
+                This project is using a generated random data using Random APIs. This dashboard by no means represent actual reality, all data shown is for simulation purposes to showcase dashboard development.
+                ''')
+            
+        label, value, delta = show_winners(df, winning_df, selected_region, selected_candidate)
+        st.metric(label=label, value=value, delta=delta)
+    # st.dataframe(winning_df)
+
+if __name__ == "__main__":
+    main()  
