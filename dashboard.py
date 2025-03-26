@@ -4,6 +4,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 import json
 
+def get_winning_df(df):
+    votes = df.groupby(["province", "candidate_name"]).agg({
+        "vote_values": "sum"
+    })
+
+    winners = votes.groupby(["province"])["vote_values"].idxmax()
+    winning_df = votes.loc[winners].reset_index()
+
+    return winning_df
+
 def make_choropleth(input_df, input_id, input_column):
     with open("sources/id.json", "r", encoding="utf-8") as f:
         geojson_data = json.load(f)
@@ -94,6 +104,57 @@ def show_winners(dataframe, winning_df, region, candidate):
 
     return label, values, delta
 
+def get_winner(dataframe, region):
+    if region == "All":
+        dataframe = get_winning_df(dataframe)
+
+        winners_summary_df = dataframe.groupby('candidate_name').agg({
+            'province':'count'
+        })
+
+        winners_summary_df = winners_summary_df.sort_values('province', ascending=False)
+
+        winners_text = '**Electoral Votes**'
+
+        column = 'province'
+        column_name = "Total Profince Won"
+    else:
+        winners_text = f"**Total Votes in {region}**"
+
+        winners_summary_df = dataframe.groupby('candidate_name').agg({
+            'vote_values':'count'
+        })
+
+        winners_summary_df = winners_summary_df.sort_values('vote_values', ascending=False)
+        
+        column = 'vote_values'
+        column_name = "Total Votes in Profince"
+
+    return winners_text, winners_summary_df, column, column_name
+
+def get_winner_dataframe(dataframe, column, column_name):
+    if column == 'vote_values':
+        maximum = max(dataframe.vote_values)
+    else:
+        maximum = max(dataframe.province)
+
+    df = st.dataframe(dataframe,
+                    column_order=('candidate_name', column),
+                    column_config={
+                        "candidate_name": st.column_config.TextColumn(
+                            "Candidate Name",
+                        ),
+                        column: st.column_config.ProgressColumn(
+                            column_name,
+                            format="%f",
+                            min_value=0,
+                            max_value=maximum
+                        )
+                    }
+                    )
+    
+    return df
+
 def main():
     st.set_page_config(
         layout="wide",
@@ -104,12 +165,7 @@ def main():
 
     df = pd.read_csv('csv/votes_cleansed.csv')
 
-    votes = df.groupby(["province", "candidate_name"]).agg({
-        "vote_values": "sum"
-    })
-
-    winners = votes.groupby(["province"])["vote_values"].idxmax()
-    winning_df = votes.loc[winners].reset_index()
+    winning_df = get_winning_df(df)
 
     # st.title("Political Dashboard Visualization Simulation 🌏")
 
@@ -168,7 +224,12 @@ def main():
             
         label, value, delta = show_winners(df, winning_df, selected_region, selected_candidate)
         st.metric(label=label, value=value, delta=delta)
-    # st.dataframe(winning_df)
+
+        winners_text, winners_summary_df, column, column_name = get_winner(df, selected_region)       
+        
+        st.write(winners_text)
+        
+        get_winner_dataframe(winners_summary_df, column, column_name)
 
 if __name__ == "__main__":
     main()  
