@@ -8,8 +8,8 @@ Coming soon.
 
 ## Data Source
 
-Data is generated using random APIs for voters and candidate. For indonesia geojson taken from [https://simplemaps.com/gis/country/id](simplemaps).
+Data is generated using random APIs for voters and candidate. For indonesia geojson taken from [simplemaps](https://simplemaps.com/gis/country/id).
 
 ## Special Thanks to!
 
-- [https://github.com/dataprofessor](dataprofessor) with his [https://github.com/dataprofessor/population-dashboard/tree/master](repo) 
+- [dataprofessor](https://github.com/dataprofessor) with his [project](https://github.com/dataprofessor/population-dashboard/tree/master) 
