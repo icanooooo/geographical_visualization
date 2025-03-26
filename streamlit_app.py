@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import numpy as np
 import json
@@ -25,56 +26,38 @@ def make_choropleth(input_df, input_id, input_column):
 
     return fig
 
-def create_proporional_bar_chart(dataframe, region):
+def create_proporional_bar_chart(dataframe, region, column):
     if region != "All":
         dataframe = dataframe[dataframe['province'] == region]
 
-    popularity_counts = dataframe.groupby("candidate_name")['vote_values'].sum().reset_index()
+    popularity_counts = dataframe.groupby(column)['vote_values'].sum().reset_index()
     popularity_counts = popularity_counts.sort_values(by="vote_values", ascending=False)
 
     total_votes = popularity_counts['vote_values'].sum()
-    popularity_counts["Percentage"] = (popularity_counts["vote_values"] / total_votes) * 100
+    popularity_counts["percentage"] = (popularity_counts["vote_values"] / total_votes) * 100
 
-    fig = px.bar(
-        popularity_counts,
-        x='vote_values',
-        y='candidate_name',
-        orientation="h",
-        text='vote_values',
-        color="candidate_name",
-        color_discrete_sequence=px.colors.qualitative.Set3,
-        title="Vote distribution by Popularity Vote"
-    )
+    fig = go.Figure()
 
-    fig.update_traces(texttemplate="%{text}", textposition='inside')
+    left = 0
+
+    for _, row in popularity_counts.iterrows():
+        fig.add_trace(go.Bar(
+            x=[row['percentage']],
+            y=[1],
+            text=f"{row[column]}<br>{row['vote_values']} votes<br>{row['percentage']:.1%}",
+            textposition="inside",
+            name=row[column],
+            orientation="h"
+        ))
+        left += row['percentage']
+
     fig.update_layout(
-        xaxis_title="Number of Votes",
-        yaxis_title="Candidate Name",
+        title="Vote Distribution by Popularity Vote",
+        barmode="stack",
         showlegend=False,
-        height=500
+        height=400
     )
 
-    # Pakai seaborn tp masih error
-    # widths = popularity_counts['Percentage']
-
-    # # Generate a Marimekko Chart
-    # fig, ax = plt.subplots(figsize=(10, 4))
-    # left = 0
-
-    # colors = plt.cm.tab10(np.linspace(0, 1, len(popularity_counts)))
-
-    # for i, (candidate, votes, pct) in enumerate(zip(popularity_counts['candidate_name'],
-    #                                                         popularity_counts['vote_values'], 
-    #                                                         widths)):
-    #     ax.barh(["Votes"], [pct], left=left, color=colors[i], label=f"{candidate}")
-    #     ax.text(left + pct / 2, 0, f"{votes}\n({pct:.1%})", ha="center", va="center", fontsize=10, color="white", weight="bold")
-    #     left += pct
-
-    # ax.set_xticks([])
-    # ax.set_yticks([])
-    # ax.set_frame_on(False)
-    # ax.legend(loc="upper left", bbox_to_anchor=(1, 1))
-    
     return fig
 
 st.set_page_config(layout="wide")
@@ -88,7 +71,7 @@ votes = df.groupby(["province", "candidate_name"]).agg({
 winners = votes.groupby(["province"])["vote_values"].idxmax()
 winning_df = votes.loc[winners].reset_index()
 
-col = st.columns((6, 3), gap='medium')
+col = st.columns((7, 3), gap='medium')
 
 with st.sidebar:
     regions = ["All", "DKI Jakarta"]
@@ -102,13 +85,15 @@ with col[0]:
     col_col = st.columns((5,5), gap='small')
 
     with col_col[0]:
-        popularity_fig = create_proporional_bar_chart(df, selected_region)
+        popularity_fig = create_proporional_bar_chart(df, selected_region, 'candidate_name')
 
         st.plotly_chart(popularity_fig)
     with col_col[1]:
-        st.write("i want to learn rust")
+        gender_fig = create_proporional_bar_chart(df, selected_region, 'gender')
+
+        st.plotly_chart(gender_fig)
 
 with col[1]:
-    st.dataframe(winning_df)
+    st.dataframe(df)
 
 # st.dataframe(winning_df)  
