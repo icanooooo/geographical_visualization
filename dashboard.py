@@ -27,10 +27,10 @@ def make_choropleth(input_df, input_id, input_column):
         hover_name=input_id,
         hover_data=["vote_values"],
         color_discrete_map={
-            "Alan Rodriguez": "darkblue",
-            "Pedro Guerin": "lightblue",
-            "Josip Brun": "#ff7f0e",
-            "Johanna Moulin": "pink"
+            "Alan Rodriguez": "#003f5c",
+            "Pedro Guerin": "#ffa600",
+            "Josip Brun": "#7a5195",
+            "Johanna Moulin": "#ef5675"
         }
     )
 
@@ -58,15 +58,15 @@ def create_proporional_bar_chart(dataframe, region, candidate, column, title):
 
     if column == 'candidate_name':
         color_mapping = {
-            "Alan Rodriguez": "darkblue",
-            "Pedro Guerin": "lightblue",
-            "Josip Brun": "#ff7f0e",
-            "Johanna Moulin": "pink"
+            "Alan Rodriguez": "#003f5c",
+            "Pedro Guerin": "#ffa600",
+            "Josip Brun": "#7a5195",
+            "Johanna Moulin": "#ef5675"
         }
     else:
         color_mapping = {
-            "male": "lightblue",
-            "female": "pink"
+            "male": "#42a5f5",
+            "female": "#ec407a"
         }
 
     popularity_counts = dataframe.groupby(column)['vote_values'].sum().reset_index()
@@ -88,7 +88,8 @@ def create_proporional_bar_chart(dataframe, region, candidate, column, title):
             textposition="inside",
             name=row[column],
             marker=dict(color=color),
-            orientation="h"
+            orientation="h",
+            textfont=dict(color="white")
         ))
         left += row['percentage']
 
